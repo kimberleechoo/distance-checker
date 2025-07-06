@@ -7,7 +7,11 @@
 </head>
 <body>
    <div>
-      <a href='http://example.com/' data-intro='Hello step one!'><button onclick="getToken">Generate Token</button></a>
+      <div class="header"><h1 data-intro="This is a simple project to check distance between postal code.">Distance Checker</h1></div>
+   </div>
+   <div class="buttonWrapper">
+      <button id="getTokenBtn" class="first-step" data-hint="Step 1: Click this to generate token" >Generate Token</button>
+      <div><p class="successToken"></p></div>
    </div>
 </body>
 <script type="module" src="/src/index.js"></script>
