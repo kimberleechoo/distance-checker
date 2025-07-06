@@ -7,18 +7,29 @@
 </head>
 <body>
    <div>
-      <div class="header"><h1 data-intro="This is a simple project to check distance between postal code.">Distance Checker</h1></div>
+      <div class="header"><h1>Distance Checker</h1></div>
    </div>
    <div class="buttonWrapper">
-      <button id="getTokenBtn" class="first-step" data-hint="Step 1: Click this to generate token" >Generate Token</button>
+      <button id="getTokenBtn" class="generateTokenBtn" data-intro="Please generate token first" >Generate Token</button>
       <div><p class="successToken"></p></div>
    </div>
    <div class="fileImportSection">
       <label for="excelUpload">Upload Excel File (.xlsx only):</label>
-      <input date-hint="Please upload excel file with postal code. header should be postal_code" type="file" id="excelUpload" accept=".xlsx" />
+      <input date-hint="Please upload excel file with postal code. header should be postal_code" type="file" id="excelUpload" accept=".xlsx, .xls" />
       <p class="uploadMessage"></p>
    </div>
+   <div class="targetPostalCodeSection">
+      <label for="tagetPostal">Target Postal Code:</label>
+      <input type="input" id="targetPostalCode" placeholder="postal code"/>
+   </div>
+   <button id="calculateDistance">Calculate</button>
+   <div id="postalOutput">
+
+   </div>
+   <div><button id="export">Export as Excel</button></div>
 </body>
 <script type="module" src="/src/index.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
 
 </html>
