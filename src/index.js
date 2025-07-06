@@ -38,7 +38,8 @@ async function getToken() {
 
       const tokenExpiryDate = epochConverter(data.expiry_timestamp);
 
-      successMsg.innerText = `✅ Token saved. It will expire on: ${tokenExpiryDate}`;
+      // successMsg.innerText = `✅ Token saved. It will expire on: ${tokenExpiryDate}`;
+      successMsg.innerText = "✅ Token saved.";
 
    } catch (error) {
       console.error('❌ Error getting token:', error);

@@ -1,6 +1,131 @@
+html, body{
+   margin:0;
+   font-family:"Inter", sans-serif;
+}
+
+body{
+   display:flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   background-color:#dbedff;
+   
+}
+
+.header{
+   text-align:center;
+   padding:20px;
+   h1{
+      font-family:"Lora", serif;
+      font-size:30px;
+      color: #000087;
+   }
+   p{
+      font-size:15px;
+      color:#000087;
+      font-style:italic;
+      width:500px;
+   }
+   
+}
+p.stepDesc {
+   font-size: 30px;
+   font-weight: 700;
+   color: #000087;
+}
+.buttonWrapper{
+   display:flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   #getTokenBtn{
+      width:180px;
+      height:50px;
+      border-radius:10px;
+      border-color: white;
+      background-color: #000087;
+      color:white;
+      font-size:18px;
+      cursor:pointer;
+      font-weight:600;
+   }
+   
+}
+#getTokenBtn:hover{
+   background-color: white;
+   color:#000087;
+}
+.successToken{
+   font-size:16px;
+}
 .fileImportSection{
+   font-size:  16px;
+   padding: 20px 0;
    display: flex;
    flex-direction: column;
    gap: 12px;
    justify-content: center;
+   align-items: center;
+}
+
+.targetPostalCodeSection{
+   font-size:  16px;
+   padding: 20px 0;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   justify-content: center;
+   align-items: center;
+}
+
+input#targetPostalCode{
+   border-radius:8px;
+   border-color: rgb(255, 255, 255);
+   font-size:16px; 
+   font-weight: 600;
+   width:180px;
+   height:25px;
+   text-align: center;
+   padding:5px;
+}
+
+button#calculateDistance {
+   width: 180px;
+   height: 50px;
+   border-radius: 10px;
+   border-color: white;
+   background-color: #000087;
+   color: white;
+   font-size: 18px;
+   cursor: pointer;
+   font-weight: 600;
+   margin-bottom: 10px;
+}
+
+button#calculateDistance:hover {
+   background-color: white;
+   color:#000087;
+}
+.postalOutput table{
+   font-size: 18px;
+   text-align: center;
+}
+.exportBtn{
+   margin-top:15px;
+   #export{
+      width: 150px;
+      height: 30px;
+      border-radius: 10px;
+      border-color: white;
+      background-color: #303030;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 300;
+      margin-bottom: 10px;
+   }
+}
+#export:hover{
+   background-color: white;
+   color: #303030;;
 }

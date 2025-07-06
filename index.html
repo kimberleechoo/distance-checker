@@ -3,30 +3,40 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Distance Checker</title>
+   <title>Distance Calculator</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 </head>
 <body>
    <div>
-      <div class="header"><h1>Distance Checker</h1></div>
+      <div class="header"><h1>Distance Calculator</h1>
+         <p>📍 This tool allows you to compare multiple postal codes against a single target postal code. It displays the total transit time and transit distance (in kilometers) for each route. If you have any questions, feel free to drop me an <a href="mailto:kimberlee1811@gmail.com">email</a>.</p>     
+      </div>
    </div>
    <div class="buttonWrapper">
+      <p class="stepDesc">👉🏽 Step 1:</p>
       <button id="getTokenBtn" class="generateTokenBtn" data-intro="Please generate token first" >Generate Token</button>
       <div><p class="successToken"></p></div>
    </div>
    <div class="fileImportSection">
-      <label for="excelUpload">Upload Excel File (.xlsx only):</label>
-      <input date-hint="Please upload excel file with postal code. header should be postal_code" type="file" id="excelUpload" accept=".xlsx, .xls" />
+      <p class="stepDesc">👉🏽 Step 2:</p>
+      <input date-hint="Please upload excel file with postal code. header should be postal_code" type="file" id="excelUpload" accept=".xlsx, .xls" /><label for="excelUpload">Upload Excel File (.xlsx only):</label>
       <p class="uploadMessage"></p>
    </div>
    <div class="targetPostalCodeSection">
+      <p class="stepDesc">👉🏽 Step 3:</p>
       <label for="tagetPostal">Target Postal Code:</label>
       <input type="input" id="targetPostalCode" placeholder="postal code"/>
    </div>
-   <button id="calculateDistance">Calculate</button>
+   <div class="calDistanceSection"> 
+      <p class="stepDesc">👉🏽 Step 4:</p>
+      <button id="calculateDistance">Calculate</button> 
+   </div>
    <div id="postalOutput">
 
    </div>
-   <div><button id="export">Export as Excel</button></div>
+   <div class="exportBtn"><button id="export">Export as Excel</button></div>
 </body>
 <script type="module" src="/src/index.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
