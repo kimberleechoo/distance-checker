@@ -1,5 +1,6 @@
 import introJs from "intro.js";
 import 'intro.js/introjs.css';
+import '../styles/main.css';
 import { fromUnixTime, format } from 'date-fns';
 import { throwError } from "rxjs";
 

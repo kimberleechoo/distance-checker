@@ -13,6 +13,11 @@
       <button id="getTokenBtn" class="first-step" data-hint="Step 1: Click this to generate token" >Generate Token</button>
       <div><p class="successToken"></p></div>
    </div>
+   <div class="fileImportSection">
+      <label for="excelUpload">Upload Excel File (.xlsx only):</label>
+      <input date-hint="Please upload excel file with postal code. header should be postal_code" type="file" id="excelUpload" accept=".xlsx" />
+      <p class="uploadMessage"></p>
+   </div>
 </body>
 <script type="module" src="/src/index.js"></script>
 
