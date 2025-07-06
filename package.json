@@ -1,0 +1,29 @@
+{
+  "name": "distancechecker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimberleechoo/distance-checker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kimberleechoo/distance-checker/issues"
+  },
+  "homepage": "https://github.com/kimberleechoo/distance-checker#readme",
+  "dependencies": {
+    "intro.js": "^7.2.0",
+    "uglify-js": "^3.19.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "http-server": "^14.1.1"
+  }
+}
