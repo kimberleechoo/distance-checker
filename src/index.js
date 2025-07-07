@@ -38,8 +38,8 @@ async function getToken() {
 
       const tokenExpiryDate = epochConverter(data.expiry_timestamp);
 
-      // successMsg.innerText = `✅ Token saved. It will expire on: ${tokenExpiryDate}`;
-      successMsg.innerText = "✅ Token saved.";
+      successMsg.innerText = `✅ Token saved. It will expire on: ${tokenExpiryDate}`;
+      // successMsg.innerText = "✅ Token saved.";
 
    } catch (error) {
       console.error('❌ Error getting token:', error);
@@ -112,7 +112,7 @@ async function getDistance(startLat, startLng, endLat, endLng) {
 
       const data = await res.json();
       const itinerary = data.plan?.itineraries?.[0];
-      console.log('itinerary :>> ', itinerary);
+      // console.log('itinerary :>> ', itinerary);
       if (!itinerary) return { duration: "No route", distance_km: "N/A", legs: [] };
 
       const durationMins = Math.round(itinerary.duration / 60);
@@ -135,6 +135,36 @@ async function getDistance(startLat, startLng, endLat, endLng) {
    }
 }
 
+//calculate drive distance
+async function getDrivingDistance(startLat, startLng, endLat, endLng) {
+   const url = `https://www.onemap.gov.sg/api/public/routingsvc/route?start=${startLat},${startLng}&end=${endLat},${endLng}&routeType=drive`;
+
+   try {
+      const res = await fetch(url, {
+         headers: {
+            'Authorization': localStorageToken
+         }
+      });
+
+      const data = await res.json();
+      const route = data.route_summary;
+      // console.log('route :>> ', route);
+      if (!route) {
+         return { duration: "No route", distance_km: "N/A", legs: [] };
+      }
+
+      const durationMins = Math.round(route.total_time / 60);
+      const totalDistanceKm = (route.total_distance / 1000).toFixed(2);
+
+      return {
+         duration: `${durationMins} mins`,
+         distance_km: totalDistanceKm,
+      };
+   } catch (err) {
+      console.error("❌ Drive distance error:", err);
+      return { duration: "Error", distance_km: "Error" };
+   }
+}
 
 
 //Calculate Button
@@ -156,22 +186,25 @@ document.getElementById('calculateDistance').addEventListener('click', async () 
          try {
             const fromCoords = await getCoordinates(fromPostal);
             const transitResult = await getDistance(fromCoords.lat, fromCoords.lng, targetCoords.lat, targetCoords.lng);
-            console.log('transitResult :>> ', transitResult);
-
+            //console.log('transitResult :>> ', transitResult);
+            const driveResult = await getDrivingDistance(fromCoords.lat, fromCoords.lng, targetCoords.lat, targetCoords.lng);
+            console.log('driveResult :>> ', driveResult);
             results.push({
                from: fromPostal,
                to: targetPostalCode,
                transit_duration: transitResult.duration,
                transit_distance_km: transitResult.distance_km,
+               drive_duration: driveResult.duration,
+               drive_distance_km: driveResult.distance_km,
             });
             
          } catch (err) {
             results.push({ from: fromPostal, to: targetPostalCode, distance: "Error" });
          }
       }
-
+      ;
       displayResults(results);
-      window.lastDistanceResults = results; // Save for export
+      window.lastDistanceResults = results;
    } catch (err) {
       outputDiv.innerHTML = `<span style="color:red">❌ ${err.message}</span>`;
    }
@@ -181,6 +214,7 @@ document.getElementById('calculateDistance').addEventListener('click', async () 
 function displayResults(data) {
    const outputDiv = document.getElementById('postalOutput');
    const table = document.createElement('table');
+   outputDiv.innerHTML = `✅ Calculated ${postalCodesFromExcel.length} routes...`
    table.border = '1';
    table.innerHTML = `
    <tr>
@@ -188,6 +222,8 @@ function displayResults(data) {
       <th>To</th>
       <th>Transit Duration</th>
       <th>Transit Distance (km)</th>
+      <th>Drive Duration</th>
+      <th>Drive Distance (km)</th>
    </tr>
    ${data.map(row => `
       <tr>
@@ -195,6 +231,8 @@ function displayResults(data) {
          <td>${row.to}</td>
          <td>${row.transit_duration}</td>
          <td>${row.transit_distance_km}</td>
+         <td>${row.drive_duration}</td>
+         <td>${row.drive_distance_km}</td>
       </tr>`).join('')}
    `;
    outputDiv.innerHTML = '';
