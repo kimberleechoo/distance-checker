@@ -214,7 +214,6 @@ document.getElementById('calculateDistance').addEventListener('click', async () 
 function displayResults(data) {
    const outputDiv = document.getElementById('postalOutput');
    const table = document.createElement('table');
-   outputDiv.innerHTML = `✅ Calculated ${postalCodesFromExcel.length} routes...`
    table.border = '1';
    table.innerHTML = `
    <tr>
