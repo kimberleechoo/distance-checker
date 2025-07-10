@@ -9,7 +9,7 @@ console.log('✅ Loaded EMAIL:', process.env.ONEMAP_EMAIL);
 console.log('✅ Loaded PASSWORD:', process.env.ONEMAP_PASSWORD);
 
 const app = express();
-const PORT = 3001;
+const PORT = 3001 || process.env.PORT;
 
 app.use(cors());
 app.use(express.json());
