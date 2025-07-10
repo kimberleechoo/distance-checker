@@ -19,6 +19,23 @@ function epochConverter(epochSeconds) {
    return format(date, 'dd-MMM-yyyy HH:mm:ss');
 }
 
+//solve api fail: 
+async function retryFetch(url, options = {}, retries = 3, delay = 1000) {
+   for (let i = 0; i < retries; i++) {
+      try {
+         const res = await fetch(url, options);
+         if (!res.ok) throw new Error(`Status: ${res.status}`);
+         return res;
+      } catch (err) {
+         if (i === retries - 1) throw err;
+         console.warn(`🔁 Retry ${i + 1}/${retries} for ${url}`);
+         await new Promise(resolve => setTimeout(resolve, delay));
+      }
+   }
+}
+
+
+
 
 const getTokenBtn = document.getElementById("getTokenBtn");
 getTokenBtn.addEventListener('click', getToken);
@@ -72,7 +89,7 @@ function handleFile(e){
 
 //get each postal code coordinates
 async function getCoordinates(postalCode) {
-   const res = await fetch(`https://www.onemap.gov.sg/api/common/elastic/search?searchVal=${postalCode}&returnGeom=Y&getAddrDetails=Y`);
+   const res = await retryFetch(`https://www.onemap.gov.sg/api/common/elastic/search?searchVal=${postalCode}&returnGeom=Y&getAddrDetails=Y`);
    const data = await res.json();
    const first = data.results?.[0];
    if (!first || !first.LATITUDE || !first.LONGITUDE) {
@@ -104,7 +121,7 @@ async function getDistance(startLat, startLng, endLat, endLng) {
 
 
    try {
-      const res = await fetch(url, {
+      const res = await retryFetch(url, {
          headers: {
             'Authorization': localStorageToken
          }
@@ -112,7 +129,7 @@ async function getDistance(startLat, startLng, endLat, endLng) {
 
       const data = await res.json();
       const itinerary = data.plan?.itineraries?.[0];
-      // console.log('itinerary :>> ', itinerary);
+      // console.log('get dis itinerary :>> ', itinerary);
       if (!itinerary) return { duration: "No route", distance_km: "N/A", legs: [] };
 
       const durationMins = Math.round(itinerary.duration / 60);
@@ -140,7 +157,7 @@ async function getDrivingDistance(startLat, startLng, endLat, endLng) {
    const url = `https://www.onemap.gov.sg/api/public/routingsvc/route?start=${startLat},${startLng}&end=${endLat},${endLng}&routeType=drive`;
 
    try {
-      const res = await fetch(url, {
+      const res = await retryFetch(url, {
          headers: {
             'Authorization': localStorageToken
          }
@@ -148,7 +165,7 @@ async function getDrivingDistance(startLat, startLng, endLat, endLng) {
 
       const data = await res.json();
       const route = data.route_summary;
-      // console.log('route :>> ', route);
+      // console.log('driving route :>> ', route);
       if (!route) {
          return { duration: "No route", distance_km: "N/A", legs: [] };
       }
@@ -199,7 +216,7 @@ document.getElementById('calculateDistance').addEventListener('click', async () 
             });
             
          } catch (err) {
-            results.push({ from: fromPostal, to: targetPostalCode, distance: "Error" });
+            results.push({ from: fromPostal, to: targetPostalCode, distance: "Error:"});
          }
       }
       ;
