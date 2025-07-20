@@ -44,7 +44,7 @@ async function getToken() {
    const successMsg = document.getElementsByClassName('successToken')[0];
 
    try {
-      const response = await fetch('http://localhost:3001/get-token');
+      const response = await fetch('https://distance-checker-05qx.onrender.com/get-token');
       if (!response.ok) throw new Error(`⚠️ HTTP Err! sts: ${response.status}`);
 
       const data = await response.json();
